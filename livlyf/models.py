@@ -60,27 +60,14 @@ class Center_Vaccine_reln(models.Model):
     Quantity=models.IntegerField()
     Which_Dose=models.IntegerField()
 
-class Vaccine_Consumer(models.Model):
-    Constumer_ID=models.IntegerField(primary_key = True)
-    Aadhar_number=models.ForeignKey(
-        Personal_Detail, on_delete=models.CASCADE)
-    Vaccine_chosen=models.CharField(max_length=30)
-    Dose_completed=models.IntegerField()
-    Last_Dose_taken_date=models.DateField()
-
-class Appointment(models.Model):
-    Appointment_Num=models.IntegerField(primary_key = True)
-    Center_ID=models.ForeignKey(
-        Vaccination_Center, on_delete=models.CASCADE)
-    Vaccine_ID=models.ForeignKey(
-        Vaccine_detail, on_delete=models.CASCADE)
-    Aadhar_number=models.ForeignKey(
-        Personal_Detail, on_delete=models.CASCADE)
-    Which_Dose=models.IntegerField()
-    Last_Dose_taken_date=models.DateField()
-    Date=models.DateField()
-    Slot_Time=models.DateField()
-
+# class Vaccine_Consumer(models.Model):
+#     Constumer_ID=models.IntegerField(primary_key = True)
+#     Aadhar_number=models.ForeignKey(
+#         Personal_Detail, on_delete=models.CASCADE)
+#     Vaccine_chosen=models.ForeignKey(
+#         Vaccine_detail, on_delete=models.CASCADE)
+#     Dose_completed=models.IntegerField()
+#     Last_Dose_taken_date=models.DateField()
 
 
     

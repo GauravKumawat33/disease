@@ -20,12 +20,20 @@
             Log-In
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Admin</a></li>
-            <li><a class="dropdown-item" href="#">Hospital</a></li>
-            <li><a class="dropdown-item" href="#">Vacci-Center</a></li>
-            <li><a class="dropdown-item" href="#">Patient</a></li>
-          </ul>
+            <li><a class="dropdown-item" href="{% url 'admin_login' %}">Admin</a></li>
+            <li><a class="dropdown-item" href="{% url 'admin_login' %}">Hospital</a></li>
+            <li><a class="dropdown-item" href="{% url 'admin_login' %}">Vacci-Center</a></li>
+            <li><a class="dropdown-item" href="{% url 'admin_login' %}">Patient</a></li>
+          </ul>    
         </li>
+
+        {% if request.user.is_staff %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout_admin' %}">Logout</a>
+        </li>
+        {% endif %}
+
+
       </ul>
       
     </div>
