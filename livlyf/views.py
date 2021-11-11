@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 
@@ -14,32 +15,58 @@ def Home(request):
 def Contact(request):
     return render(request,'contact.html',{})
 
-def Index(request):
-    if not request.use.is_staff:
-        return redirect('login')
-    return render(request,'index.html')
 
-def Login(request):
-    error=""
-    if request.method=="POST":
-        u=request.POST['uname']
-        p=request.POST['pwd']
-        user=authenticate(username=u,password=p)
+def handleSignUp(request):
+    if request.method == 'POST':
+        #GET THE POST PARAMETERS
+        username=request.POST['username']
+        fname=request.POST['fname']
+        lname=request.POST['lname']
+        email=request.POST['email']
+        pass1=request.POST['pass1']
+        pass2=request.POST['pass2']
+     # check for errorneous input
+        if len(username)> 10:
+            messages.error(request, " Your user name must be under 10 characters")
+            return redirect('home')
 
-        try:
-            if user.is_staff:
-                login(request,user)
-                error="no"
-            else:
-                error="yes"
-        except:
-            error="yes"
-    d={'error':error}
-    return render(request,'login.html',d)
+        if not username.isalnum():
+            messages.error(request, " User name should only contain letters and numbers")
+            return redirect('home')
+        if (pass1!= pass2):
+             messages.error(request, " Passwords do not match")
+             return redirect('home')
 
-def Logout_admin(request):
-    if not request.user.is_staff:
-        return redirect('admin_login')
-        
+
+     # Create the user
+        myuser = User.objects.create_user(username, email, pass1)
+        myuser.first_name= fname
+        myuser.last_name= lname
+        myuser.save()
+        messages.success(request, " Your LivLyf has been successfully created")
+        return redirect('home')
+    else:
+        return HttpResponse('404- Page Not Found')
+
+
+def handleLogin(request):
+    if request.method == 'POST':
+        #GET THE POST PARAMETERS
+        loginusername=request.POST['username']
+        loginpass=request.POST['pass']
+        user=authenticate(username= loginusername, password= loginpass)
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Successfully Logged In")
+            return redirect("home")
+        else:
+            messages.error(request, "Invalid credentials! Please try again")
+            return redirect("home")
+
+
+    return HttpResponse("404- Not found")
+
+def handleLogout(request):
     logout(request)
-    return redirect('admin_login')
+    messages.success(request, "Successfully logged out")
+    return redirect('home')
