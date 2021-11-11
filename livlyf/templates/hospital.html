@@ -1,0 +1,46 @@
+{% include 'base.html' %}
+{% include 'nav2.html' %}
+
+{% block content %}
+<h1 class="text-center">Hospital Details</h1>
+<br>
+<br>
+{% if hosp %}
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Hospital ID</th>
+        <th scope="col">Hospital Name</th>
+        <th scope="col">City</th>
+        <th scope="col">Locality</th>
+        <th scope="col">Type</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Available ICU Beds</th>
+        <th scope="col">Available Normal Beds</th>
+        <th scope="col">Available Oxygen Cyclinder</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for hos in hosp %}
+      <tr>
+        <th scope="row">{{hos.Hospital_ID}}</th>
+        <td>{{hos.Hospital_name}}</td>
+        <td>{{hos.City}}</td>
+        <td>{{hos.Locality}}</td>
+        <td>{{hos.Type}}</td>
+        <td>{{hos.Phone}}</td>
+        <td>{{hos.Av_ICU_Beds}}</td>
+        <td>{{hos.Av_Normal_Beds}}</td>
+        <td>{{hos.Av_Oxygen_Cylinder}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+<h1>No Data</h1>
+
+{% endif %}
+{% endblock content %}
+
+
+{% include 'footer.html'%}

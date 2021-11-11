@@ -8,5 +8,10 @@ urlpatterns = [
     path('signup/', views.handleSignUp, name="handleSignUp"),
     path('login/', views.handleLogin, name="handleLogin"),
     path('logout/', views.handleLogout, name="handleLogout"),
+    path('vaccines/', views.Vaccines, name="vaccines"),
+    path('hospitals/', views.Hospitals, name="hospitals"),
+    path('centers/', views.Centers, name="centers"),
+
+
 
 ]

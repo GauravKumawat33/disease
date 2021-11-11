@@ -1,0 +1,38 @@
+{% include 'base.html' %}
+{% include 'nav2.html' %}
+
+{% block content %}
+<h1 class="text-center">Vaccines Details</h1>
+<br>
+<br>
+{% if vacc %}
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Vaccine ID</th>
+        <th scope="col">Vaccine Name</th>
+        <th scope="col">Disease Targetting</th>
+        <th scope="col">Required Doses</th>
+        <th scope="col">Interval between Doses (in days)</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for vac in vacc %}
+      <tr>
+        <th scope="row">{{vac.Vaccine_ID}}</th>
+        <td>{{vac.Vaccine_name}}</td>
+        <td>{{vac.Disease_targetting}}</td>
+        <td>{{vac.Required_Doses}}</td>
+        <td>{{vac.Interval_btw_Doses_indays}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+<h1>No Data</h1>
+
+{% endif %}
+{% endblock content %}
+
+
+{% include 'footer.html'%}

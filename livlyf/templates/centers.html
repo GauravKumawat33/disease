@@ -1,0 +1,38 @@
+{% include 'base.html' %}
+{% include 'nav2.html' %}
+
+{% block content %}
+<h1 class="text-center">Vaccination Center Details</h1>
+<br>
+<br>
+{% if Center %}
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Center ID</th>
+        <th scope="col">Center Name</th>
+        <th scope="col">City</th>
+        <th scope="col">Locality</th>
+        <th scope="col">Phone</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for cent in Center %}
+      <tr>
+        <th scope="row">{{cent.Center_ID}}</th>
+        <td>{{cent.Center_name}}</td>
+        <td>{{cent.City}}</td>
+        <td>{{cent.Locality}}</td>
+        <td>{{cent.Phone}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+<h1>No Data</h1>
+
+{% endif %}
+{% endblock content %}
+
+
+{% include 'footer.html'%}

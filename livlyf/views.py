@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 
+from .models import Vaccine_detail, Hospital, Vaccination_Center
+
 # Create your views here.
 
 def About(request):
@@ -15,6 +17,8 @@ def Home(request):
 def Contact(request):
     return render(request,'contact.html',{})
 
+def Vaccines(request):
+    return render(request,'vaccine.html',{})
 
 def handleSignUp(request):
     if request.method == 'POST':
@@ -48,7 +52,6 @@ def handleSignUp(request):
     else:
         return HttpResponse('404- Page Not Found')
 
-
 def handleLogin(request):
     if request.method == 'POST':
         #GET THE POST PARAMETERS
@@ -63,10 +66,23 @@ def handleLogin(request):
             messages.error(request, "Invalid credentials! Please try again")
             return redirect("home")
 
-
     return HttpResponse("404- Not found")
 
 def handleLogout(request):
     logout(request)
     messages.success(request, "Successfully logged out")
     return redirect('home')
+
+def Vaccines(request):
+    vacc=Vaccine_detail.objects.all()
+    return render(request,'vaccine.html',{'vacc':vacc})
+
+def Hospitals(request):
+    hosp=Hospital.objects.all()
+    return render(request,'hospital.html',{'hosp':hosp})
+
+
+def Centers(request):
+    Center=Vaccination_Center.objects.all()
+    return render(request,'centers.html',{'Center':Center})
+
