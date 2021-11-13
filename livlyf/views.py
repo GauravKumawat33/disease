@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 
-from .models import Vaccine_detail, Hospital, Vaccination_Center,Patient
+from .models import Vaccine_detail, Hospital, Vaccination_Center,Patient,Personal_Detail
 
 from .filter1 import OrderFilter,OrderFilterV,OrderFilterC,OrderFilterP
 # Create your views here.
@@ -106,9 +106,8 @@ def Patients(request):
             return HttpResponse("404- Not found")
 
 def Profile(request):
+    one_entry = Personal_Detail.objects.get(pk=request.user)
     if request.user.is_authenticated:
-        return render(request,'profile.html',{})
-
-
-
-
+        return render(request,'profile.html',{'u':one_entry})
+    else:
+            return HttpResponse("404- Not found")

@@ -12,11 +12,11 @@
     color: #000;
 }
 
-.student-profile .card {
+.person-profile .card {
     border-radius: 10px;
 }
 
-.student-profile .card .card-header .profile_img {
+.person-profile .card .card-header .profile_img {
     width: 150px;
     height: 150px;
     object-fit: cover;
@@ -25,18 +25,18 @@
     border-radius: 50%;
 }
 
-.student-profile .card h3 {
+.person-profile .card h3 {
     font-size: 20px;
     font-weight: 700;
 }
 
-.student-profile .card p {
+.person-profile .card p {
     font-size: 16px;
     color: #000;
 }
 
-.student-profile .table th,
-.student-profile .table td {
+.person-profile .table th,
+.person-profile .table td {
     font-size: 14px;
     padding: 5px 10px;
     color: #000;
@@ -62,18 +62,19 @@
               <div class="col-rt-12">
                   <div class="Scriptcontent">
                   
-    <!-- Student Profile -->
-    <div class="student-profile py-4">
+    <!-- person Profile -->
+    <div class="person-profile py-4">
       <div class="container">
         <div class="row">
           <div class="col-lg-4">
             <div class="card shadow-sm">
               <div class="card-header bg-transparent text-center">
-                <img class="profile_img" src="{% static 'images/profile.png' %}" alt="student dp">
+                <img class="profile_img" src="{% static 'images/profile.png' %}" alt="person dp">
                 <h3>{{request.user.get_full_name}}</h3>
               </div>
               <div class="card-body">
                 <p class="mb-0"><strong class="pr-1">Aadhar Card:</strong>{{request.user}}</p>
+                <p class="mb-0"><strong class="pr-1">Phone: </strong>{{u.Phone}}</p>
                 <p class="mb-0"><strong class="pr-1">Email Address: </strong>{{request.user.email}}</p>
                 <!-- <p class="mb-0"><strong class="pr-1">Section:</strong>A</p> -->
               </div>
@@ -87,29 +88,34 @@
               <div class="card-body pt-0">
                 <table class="table table-bordered">
                   <tr>
-                    <th width="30%">Roll</th>
+                    <th width="30%">First Name</th>
                     <td width="2%">:</td>
-                    <td>125</td>
+                    <td>{{u.First_name}}</td>
                   </tr>
                   <tr>
-                    <th width="30%">Academic Year	</th>
+                    <th width="30%">Last Name</th>
                     <td width="2%">:</td>
-                    <td>2020</td>
+                    <td>{{u.Last_name}}</td>
                   </tr>
                   <tr>
-                    <th width="30%">Gender</th>
+                    <th width="30%">Sex</th>
                     <td width="2%">:</td>
-                    <td>Male</td>
+                    <td>{{u.Sex}}</td>
                   </tr>
                   <tr>
-                    <th width="30%">Religion</th>
+                    <th width="30%">Birth Date</th>
                     <td width="2%">:</td>
-                    <td>Group</td>
+                    <td>{{u.Birth_date}}</td>
                   </tr>
                   <tr>
-                    <th width="30%">blood</th>
+                    <th width="30%">Locality</th>
                     <td width="2%">:</td>
-                    <td>B+</td>
+                    <td>{{u.Locality}}</td>
+                  </tr>
+                  <tr>
+                    <th width="30%">City</th>
+                    <td width="2%">:</td>
+                    <td>{{u.City}}</td>
                   </tr>
                 </table>
               </div>
