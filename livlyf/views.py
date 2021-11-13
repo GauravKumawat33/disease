@@ -32,25 +32,30 @@ def handleSignUp(request):
         email=request.POST['email']
         pass1=request.POST['pass1']
         pass2=request.POST['pass2']
+        try:
+            user_exists = User.objects.get(username=username)
+            messages.error(request, "Aadhar Number already register")
+            return redirect('home')
+        except User.DoesNotExist:
      # check for errorneous input
-        if len(username)!= 12:
-            messages.error(request, "Aadhar Number should be 12 Digit long")
-            return redirect('home')
+            if len(username)!= 12:
+                messages.error(request, "Aadhar Number should be 12 Digit long")
+                return redirect('home')
 
-        if not username.isnumeric():
-            messages.error(request, " User name should only contain numbers")
-            return redirect('home')
-        if (pass1!= pass2):
-             messages.error(request, " Passwords do not match")
-             return redirect('home')
+            if not username.isnumeric():
+                messages.error(request, " User name should only contain numbers")
+                return redirect('home')
+            if (pass1!= pass2):
+                messages.error(request, " Passwords do not match")
+                return redirect('home')
 
-     # Create the user
-        myuser = User.objects.create_user(username, email, pass1)
-        myuser.first_name= fname
-        myuser.last_name= lname
-        myuser.save()
-        messages.success(request, " Your LivLyf has been successfully created")
-        return redirect('home')
+        # Create the user
+            myuser = User.objects.create_user(username, email, pass1)
+            myuser.first_name= fname
+            myuser.last_name= lname
+            myuser.save()
+            messages.success(request, " Your LivLyf has been successfully created")
+            return redirect('home')
     else:
         return HttpResponse('404- Page Not Found')
 
@@ -106,8 +111,14 @@ def Patients(request):
             return HttpResponse("404- Not found")
 
 def Profile(request):
-    one_entry = Personal_Detail.objects.get(pk=request.user)
-    if request.user.is_authenticated:
+    try:
+        one_entry = Personal_Detail.objects.get(pk=request.user)
+    except Personal_Detail.DoesNotExist:
+        one_entry = None
+    
+    if request.user.is_authenticated and one_entry:
         return render(request,'profile.html',{'u':one_entry})
+    elif request.user.is_authenticated:
+        return HttpResponse("Contact Admin to register Yourself")
     else:
             return HttpResponse("404- Not found")
