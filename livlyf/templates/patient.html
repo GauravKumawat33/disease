@@ -1,0 +1,78 @@
+{% include 'base.html' %}
+{% include 'nav2.html' %}
+{% load static %}
+{% block content %}
+<h1 class="text-center">Patient Details</h1>
+<br>
+<br>
+{% if pat %}
+<br>
+<div class="row">
+  <div class="col">
+    <div class="card card-body">
+      <form action="" method="get">
+        {{myFilter.form}}
+        <button class="btn btn-primary" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</div>
+<table class="table table-striped table-sortable">
+    <thead>
+      <tr>
+          <th scope="col">Patient ID</th>
+          <th scope="col">Disease Name</th>
+          <th scope="col">Patient Condition</th>
+          <th scope="col">Registration Date</th>
+          <th scope="col">Aadhar Card Number</th>
+            <th scope="col">Hospital ID</th>
+
+      </tr>
+    </thead>
+    <tbody>
+        {% for p in pat %}
+      <tr>
+        <th scope="row">{{p.Patient_ID}}</th>
+        <td>{{p.Disease_Name}}</td>
+        <td>{{p.Patient_Condition}}</td>
+        <td>{{p.Registration_Date}}</td>
+        <td>{{p.Aadhar_number_id}}</td>
+        <td>{{p.Hospital_ID_id}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+{% else %}
+<h1>No Data</h1>
+
+{% endif %}
+<script src="{% static 'tablesort.js'%}"></script>
+
+{% endblock content %}
+<style>
+  .table-sortable th {
+    cursor: pointer;
+  }
+  
+  .table-sortable .th-sort-asc::after {
+    content: "\25b4";
+  }
+  
+  .table-sortable .th-sort-desc::after {
+    content: "\25be";
+  }
+  
+  .table-sortable .th-sort-asc::after,
+  .table-sortable .th-sort-desc::after {
+    margin-left: 5px;
+  }
+  
+  .table-sortable .th-sort-asc,
+  .table-sortable .th-sort-desc {
+    background: rgba(0, 0, 0, 0.1);
+  }
+  
+</style>
+
+{% include 'footer.html'%}

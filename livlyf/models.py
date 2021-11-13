@@ -44,13 +44,23 @@ class Hospital(models.Model):
 
 
 class Patient(models.Model):
+    options=(
+        ('Active','Active'),
+        ('Recovering','Recovering'),
+        ('Critical','Critical'),
+        ('Dead','Dead'),
+    )
+    CATEGORY_DISEASE=(
+        ('COVID 19','COVID 19'),
+        ('Cancer','Cancer'),
+    )
     Patient_ID=models.IntegerField(primary_key = True)
     Aadhar_number=models.ForeignKey(
         Personal_Detail, on_delete=models.CASCADE)
     Hospital_ID=models.ForeignKey(
         Hospital, on_delete=models.CASCADE)
-    Disease_Name=models.CharField(max_length=30)
-    Patient_Condition=models.CharField(max_length=30)
+    Disease_Name=models.CharField(max_length=30,choices=CATEGORY_DISEASE)
+    Patient_Condition=models.CharField(max_length=30,choices=options)
     Registration_Date=models.DateField()
 
 

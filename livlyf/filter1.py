@@ -1,7 +1,7 @@
 from django.db.models import fields
 import django_filters
 from django_filters import DateFilter, CharFilter
-from .models import Hospital,Vaccination_Center,Vaccine_detail
+from .models import Hospital,Vaccination_Center,Vaccine_detail,Patient
 
 class OrderFilter(django_filters.FilterSet):
     Hosp_name=CharFilter(field_name='Hospital_name',lookup_expr='icontains')
@@ -23,3 +23,11 @@ class OrderFilterV(django_filters.FilterSet):
     class Meta:
         model=Vaccine_detail
         fields=['Required_Doses','Disease_targetting',]
+
+class OrderFilterP(django_filters.FilterSet):
+    start_date=DateFilter(field_name="Registration_Date",lookup_expr='gte')
+    end_date=DateFilter(field_name="Registration_Date",lookup_expr='lte')
+
+    class Meta:
+        model=Patient
+        fields=['Patient_Condition','Disease_Name',]

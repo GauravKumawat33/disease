@@ -4,9 +4,9 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 
-from .models import Vaccine_detail, Hospital, Vaccination_Center
+from .models import Vaccine_detail, Hospital, Vaccination_Center,Patient
 
-from .filter1 import OrderFilter,OrderFilterV,OrderFilterC
+from .filter1 import OrderFilter,OrderFilterV,OrderFilterC,OrderFilterP
 # Create your views here.
 
 def Appointment(request):
@@ -23,9 +23,6 @@ def Home(request):
 def Contact(request):
     return render(request,'contact.html',{})
 
-def Vaccines(request):
-    return render(request,'vaccine.html',{})
-
 def handleSignUp(request):
     if request.method == 'POST':
         #GET THE POST PARAMETERS
@@ -36,17 +33,16 @@ def handleSignUp(request):
         pass1=request.POST['pass1']
         pass2=request.POST['pass2']
      # check for errorneous input
-        if len(username)> 10:
-            messages.error(request, " Your user name must be under 10 characters")
+        if len(username)!= 12:
+            messages.error(request, "Aadhar Number should be 12 Digit long")
             return redirect('home')
 
-        if not username.isalnum():
-            messages.error(request, " User name should only contain letters and numbers")
+        if not username.isnumeric():
+            messages.error(request, " User name should only contain numbers")
             return redirect('home')
         if (pass1!= pass2):
              messages.error(request, " Passwords do not match")
              return redirect('home')
-
 
      # Create the user
         myuser = User.objects.create_user(username, email, pass1)
@@ -100,8 +96,18 @@ def Centers(request):
     Center=myFilter.qs
     return render(request,'centers.html',{'Center':Center,'myFilter':myFilter})
 
+def Patients(request):
+    if request.user.is_staff:
+        pat=Patient.objects.all()
+        myFilter=OrderFilterP(request.GET,queryset=pat)
+        pat=myFilter.qs
+        return render(request,'patient.html',{'pat':pat,'myFilter':myFilter})
+    else:
+            return HttpResponse("404- Not found")
 
-
+def Profile(request):
+    if request.user.is_authenticated:
+        return render(request,'profile.html',{})
 
 
 
