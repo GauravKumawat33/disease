@@ -1,6 +1,6 @@
 {% include 'base.html' %}
 {% include 'nav2.html' %}
-
+{% load static %}
 {% block content %}
 <h1 class="text-center">Vaccination Center Details</h1>
 <br>
@@ -13,26 +13,11 @@
       <form action="" method="get">
         {{myFilter.form}}
         <button class="btn btn-primary" type="submit">Search</button>
-
-        <!-- <li class="navbar-nav nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            sortBy
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="/?category=1">ICU Beds</a></li>
-            <li><a class="dropdown-item" href="/?category=2">Normal Beds</a></li>
-            <li><a class="dropdown-item" href="/?category=3">Oxygen Cyclinder</a></li>
-
-          </ul>
-        </li> -->
-
-
-
       </form>
     </div>
   </div>
 </div>
-<table class="table table-striped">
+<table class="table table-striped table-sortable">
     <thead>
       <tr>
         <th scope="col">Center ID</th>
@@ -58,7 +43,32 @@
 <h1>No Data</h1>
 
 {% endif %}
-{% endblock content %}
+<script src="{% static 'tablesort.js'%}"></script>
 
+{% endblock content %}
+<style>
+  .table-sortable th {
+    cursor: pointer;
+  }
+  
+  .table-sortable .th-sort-asc::after {
+    content: "\25b4";
+  }
+  
+  .table-sortable .th-sort-desc::after {
+    content: "\25be";
+  }
+  
+  .table-sortable .th-sort-asc::after,
+  .table-sortable .th-sort-desc::after {
+    margin-left: 5px;
+  }
+  
+  .table-sortable .th-sort-asc,
+  .table-sortable .th-sort-desc {
+    background: rgba(0, 0, 0, 0.1);
+  }
+  
+</style>
 
 {% include 'footer.html'%}

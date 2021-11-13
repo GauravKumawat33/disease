@@ -1,11 +1,15 @@
 {% include 'base.html' %}
 {% include 'nav2.html' %}
+{% load static %}
 <style>
-    body{
-        background-color: #cccccc;
+    .nobita{
+        text-align: center;
+        width:100%;
     }
 </style>
 {% block content %}
     <h1 class="text-center" id="homepage">Welcome to Disease management system</h1>
+    <img class="nobita" src="{% static 'images/nobita.png'%}" alt="nobita">
+
 {% endblock content %}
 {%include 'footer.html'%}

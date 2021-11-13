@@ -9,6 +9,11 @@ from .models import Vaccine_detail, Hospital, Vaccination_Center
 from .filter1 import OrderFilter,OrderFilterV,OrderFilterC
 # Create your views here.
 
+def Appointment(request):
+    return render(request,'appointment.html',{})
+    
+
+
 def About(request):
     return render(request,'about.html',{})
 
@@ -81,17 +86,20 @@ def Vaccines(request):
     return render(request,'vaccine.html',{'vacc':vacc,'myFilter':myFilter})
 
 def Hospitals(request):
+    cat=request.GET.get('orderby')
     hosp=Hospital.objects.all()
     myFilter=OrderFilter(request.GET,queryset=hosp)
     hosp=myFilter.qs
+    print("hello")
+    print(cat)
     return render(request,'hospital.html',{'hosp':hosp,'myFilter':myFilter})
-
 
 def Centers(request):
     Center=Vaccination_Center.objects.all()
     myFilter=OrderFilterC(request.GET,queryset=Center)
     Center=myFilter.qs
     return render(request,'centers.html',{'Center':Center,'myFilter':myFilter})
+
 
 
 
