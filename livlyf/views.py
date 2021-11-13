@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate,login,logout
 
 from .models import Vaccine_detail, Hospital, Vaccination_Center
 
+from .filter1 import OrderFilter,OrderFilterV,OrderFilterC
 # Create your views here.
 
 def About(request):
@@ -75,14 +76,25 @@ def handleLogout(request):
 
 def Vaccines(request):
     vacc=Vaccine_detail.objects.all()
-    return render(request,'vaccine.html',{'vacc':vacc})
+    myFilter=OrderFilterV(request.GET,queryset=vacc)
+    vacc=myFilter.qs
+    return render(request,'vaccine.html',{'vacc':vacc,'myFilter':myFilter})
 
 def Hospitals(request):
     hosp=Hospital.objects.all()
-    return render(request,'hospital.html',{'hosp':hosp})
+    myFilter=OrderFilter(request.GET,queryset=hosp)
+    hosp=myFilter.qs
+    return render(request,'hospital.html',{'hosp':hosp,'myFilter':myFilter})
 
 
 def Centers(request):
     Center=Vaccination_Center.objects.all()
-    return render(request,'centers.html',{'Center':Center})
+    myFilter=OrderFilterC(request.GET,queryset=Center)
+    Center=myFilter.qs
+    return render(request,'centers.html',{'Center':Center,'myFilter':myFilter})
+
+
+
+
+
 
