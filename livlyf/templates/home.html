@@ -52,7 +52,18 @@
         </button>
       </div>
 </header>
-
+   
+<div class="fb">
+    <h2 id="fbi">Feedback Form</h2>
+    <hr class="w-25 mx-auto">
+    <div class="form-group">
+        <form method="POST" class="post-form">
+          {% csrf_token %} 
+          {{ form.as_p }}
+          <button class="btn btn-secondary" name="button1">Submit</button>
+        </form>  
+    </div>      
+</div>
 {% endblock content %}
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark bottom"
 <div class="footer-bottom">

@@ -19,27 +19,27 @@
                 <div class="well-title">
                     <h2>Book an Appointment</h2>
                 </div>
-                <form>
+                <form action="method=POST" class="post-form">
                     <!-- Form start -->
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label" for="name">Name</label>
-                                <input id="name" name="name" type="text" placeholder="Name" class="form-control input-md">
+                                <input id="name" name="name" type="text" placeholder="{{u.First_name}} {{u.Last_name}}" class="form-control input-md" readonly>
                             </div>
                         </div>
                         <!-- Text input-->
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="control-label" for="email">Email</label>
-                                <input id="email" name="email" type="text" placeholder="E-Mail" class="form-control input-md">
+                                <label class="control-label" for="email">Phone</label>
+                                <input id="phone" name="phone" type="text" placeholder="{{u.Phone}}" class="form-control input-md" readonly>
                             </div>
                         </div>
                         <!-- Text input-->
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label" for="date">Preferred Date</label>
-                                <input id="date" name="date" type="text" placeholder="Preferred Date" class="form-control input-md">
+                                <input id="date" name="date" type="date" placeholder="Preferred Date" class="form-control input-md">
                             </div>
                         </div>
                         <!-- Select Basic -->
@@ -47,27 +47,34 @@
                             <div class="form-group">
                                 <label class="control-label" for="time">Preferred Time</label>
                                 <select id="time" name="time" class="form-control">
-                                    <option value="8:00 to 9:00">8:00 to 9:00</option>
-                                    <option value="9:00 to 10:00">9:00 to 10:00</option>
-                                    <option value="10:00 to 1:00">10:00 to 1:00</option>
+                                    <option value="8:00 to 9:00">Slot1: 8:00am to 10:00am</option>
+                                    <option value="9:00 to 10:00">Slot2: 1:00pm to 2:00pm</option>
+                                    <option value="10:00 to 1:00">Slot3: 3:00pm to 5:00pm</option>
                                 </select>
                             </div>
                         </div>
                         <!-- Select Basic -->
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label" for="appointmentfor">Appointment For</label>
-                                <select id="appointmentfor" name="appointmentfor" class="form-control">
-                                    <option value="Service#1">Service#1</option>
-                                    <option value="Service#2">Service#2</option>
-                                    <option value="Service#3">Service#3</option>
-                                    <option value="Service#4">Service#4</option>
+                                <label class="control-label" for="vaccines">Vaccine Name</label>
+                                <select id="vaccines" name="vaccines" class="form-control">
+                                    {% for i in vacc %}
+                                    <option value="Service#1">{{i.Vaccine_name}}</option>
+                                    {% endfor %}
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="num">Dose Number</label>
+                                <input id="num" name="num" type="text" placeholder="0" class="form-control input-md">
                             </div>
                         </div>
                         <!-- Button -->
                         <div class="col-md-12">
                             <div class="form-group">
+                        <br>
+ 
                                 <button id="singlebutton" name="singlebutton" class="btn btn-primary">Make An Appointment</button>
                             </div>
                         </div>
@@ -79,23 +86,23 @@
         <div class="col-md-6">
             <div class="well-block">
                 <div class="well-title">
-                    <h2>Why Appointment with Us</h2>
+                    <h2>Why Vaccination?</h2>
                 </div>
                 <div class="feature-block">
                     <div class="feature feature-blurb-text">
-                        <h4 class="feature-title">24/7 Hours Available</h4>
+                        <h4 class="feature-title">Immune to Fight Against Covid</h4>
                         <div class="feature-content">
                             <p>Integer nec nisi sed mi hendrerit mattis. Vestibulum mi nunc, ultricies quis vehicula et, iaculis in magnestibulum.</p>
                         </div>
                     </div>
                     <div class="feature feature-blurb-text">
-                        <h4 class="feature-title">Experienced Staff Available</h4>
+                        <h4 class="feature-title">Free</h4>
                         <div class="feature-content">
                             <p>Aliquam sit amet mi eu libero fermentum bibendum pulvinar a turpis. Vestibulum quis feugiat risus. </p>
                         </div>
                     </div>
                     <div class="feature feature-blurb-text">
-                        <h4 class="feature-title">Low Price & Fees</h4>
+                        <h4 class="feature-title">Easy to Book</h4>
                         <div class="feature-content">
                             <p>Praesent eu sollicitudin nunc. Cras malesuada vel nisi consequat pretium. Integer auctor elementum nulla suscipit in.</p>
                         </div>

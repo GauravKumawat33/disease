@@ -1,11 +1,28 @@
 from django.db import models
 from django.db.models.fields import DateField
 from django_filters.filters import ChoiceFilter
+from datetime import datetime 
 
 # Create your models here.
+class Vaccine_detail(models.Model):
+    Category_Vaccine=(
+        ('Covaxin vaccine','Covaxin vaccine'),
+        ('Coishield vaccine','Coishield vaccine'),
+        ('Johnson & Johnson vaccine','Johnson & Johnson vaccine'),
+        ('Sputnik V','Sputnik V'),
+    )
+    CATEGORY_DISEASE=(
+        ('COVID 19','COVID 19'),
+        ('Cancer','Cancer'),
+    )
+    Vaccine_ID=models.IntegerField(primary_key = True)
+    Vaccine_name=models.CharField(max_length=30)
+    Disease_targetting=models.CharField(max_length=30,choices=CATEGORY_DISEASE)
+    Required_Doses=models.IntegerField()
+    Interval_btw_Doses_indays=models.IntegerField()
 
 class Personal_Detail(models.Model):
-    Aadhar_number=models.CharField(primary_key = True,max_length=12)
+    Aadhar_number=models.CharField(primary_key = True,max_length=12,default=None)
     First_name=models.CharField(max_length=30)
     Last_name=models.CharField(max_length=30)
     Birth_date=models.DateField()
@@ -14,6 +31,8 @@ class Personal_Detail(models.Model):
     Locality=models.CharField(max_length=30)
     Phone=models.CharField(max_length=10)
     Email_ID=models.EmailField(max_length = 254)
+    
+    
 
 class Hospital(models.Model):
     CATEGORY_CITY=(
@@ -24,6 +43,7 @@ class Hospital(models.Model):
         ('Kati Ghati','Kati Ghati'),
         ('Kala Kuan','Kala Kuan'),
         ('Ashoka Circle','Ashoka Circle'),
+        ('Panvel','Panvel'),
     )
     CATEGORY_Type=(
         ('General','General'),
@@ -62,22 +82,7 @@ class Patient(models.Model):
     Patient_Condition=models.CharField(max_length=30,choices=options)
     Registration_Date=models.DateField()
 
-class Vaccine_detail(models.Model):
-    Category_Vaccine=(
-        ('Covaxin vaccine','Covaxin vaccine'),
-        ('Coishield vaccine','Coishield vaccine'),
-        ('Johnson & Johnson vaccine','Johnson & Johnson vaccine'),
-        ('Sputnik V','Sputnik V'),
-    )
-    CATEGORY_DISEASE=(
-        ('COVID 19','COVID 19'),
-        ('Cancer','Cancer'),
-    )
-    Vaccine_ID=models.IntegerField(primary_key = True)
-    Vaccine_name=models.CharField(max_length=30)
-    Disease_targetting=models.CharField(max_length=30,choices=CATEGORY_DISEASE)
-    Required_Doses=models.IntegerField()
-    Interval_btw_Doses_indays=models.IntegerField()
+
 
 class Vaccination_Center(models.Model):
     CATEGORY_CITY=(
@@ -88,6 +93,8 @@ class Vaccination_Center(models.Model):
         ('Kati Ghati','Kati Ghati'),
         ('Kala Kuan','Kala Kuan'),
         ('Ashoka Circle','Ashoka Circle'),
+        ('Panvel','Panvel'),
+
     )
     Center_ID=models.IntegerField(primary_key = True)
     Center_name=models.CharField(max_length=30)
@@ -107,11 +114,14 @@ class Center_Vaccine_reln(models.Model):
 class Vaccine_Consumer(models.Model):
     Constumer_ID=models.IntegerField(primary_key = True)
     Aadhar_number=models.ForeignKey(
-        Personal_Detail, on_delete=models.CASCADE)
-    Vaccine_chosen=models.ForeignKey(
-        Vaccine_detail, on_delete=models.CASCADE)
-    Dose_completed=models.IntegerField()
-    Last_Dose_taken_date=models.DateField()
+        Personal_Detail, on_delete=models.CASCADE,default='0000000')
+    Vaccine_chosen=models.ForeignKey(Vaccine_detail, on_delete=models.CASCADE,default=None)
+    Dose_completed=models.IntegerField(default=0)
+    Last_Dose_taken_date=models.DateField(default=datetime.now, blank=True)
 
-
+class Feedbk(models.Model):
+    Name=models.CharField(max_length=200)
+    Email=models.CharField(max_length=200)
+    Phone=models.CharField(max_length=10)
+    Feedback=models.CharField(max_length=1000)
     

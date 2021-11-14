@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from . models import Personal_Detail
+from . models import Personal_Detail,Feedbk
 
 class Registration(forms.ModelForm):
     class Meta:
@@ -14,3 +14,15 @@ class Registration(forms.ModelForm):
         #     'Locality':forms.TextInput(attrs={'class':'form-control'}),
         #     'Phone':forms.TextInput(attrs={'class':'form-control'}),
         # }
+class Feedback(forms.ModelForm):
+    class Meta:
+        model= Feedbk
+        fields=('Name','Email','Phone','Feedback')
+
+        widgets={
+            'Name':forms.TextInput(attrs={'class':'form-control'}),            
+            'Email':forms.TextInput(attrs={'class':'form-control'}),
+            'Phone':forms.TextInput(attrs={'class':'form-control'}),
+            'Feedback':forms.Textarea(attrs={'class':'form-control'}),
+        }
+

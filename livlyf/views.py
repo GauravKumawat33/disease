@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib import messages
@@ -12,22 +13,32 @@ from .filter1 import OrderFilter,OrderFilterV,OrderFilterC,OrderFilterP
 # Create your views here.
 
 def Appointment(request):
-    try:
-        one_entry = Personal_Detail.objects.get(pk=request.user)
-    except Personal_Detail.DoesNotExist:
-        one_entry = None
-    
-    m=Vaccine_detail.objects.all()
-    if request.user.is_authenticated and one_entry:
-        return render(request,'appointment.html',{'u':one_entry,'vacc':m,})
-    
-    
-    
-    elif request.user.is_authenticated:
-        messages.error(request, "Please Register First")
-        return redirect('registration')
+    if request.method == 'POST':
+        adhar=request.user
+        v_chos=request.POST['vaccines']
+        num=request.POST['num']
+        date=request.POST['date']
+        pre_date=None
+        if num==1:
+            pre_date = None 
+        else:
+            pre_date = Vaccine_Consumer.objects.get(Aadhar_number=request.user).order_by("-Last_Dose_taken_date")
+            print(pre_date.type())
+
     else:
-        return HttpResponse("Log-In to book appointment")
+        try:
+            one_entry = Personal_Detail.objects.get(pk=request.user)
+        except Personal_Detail.DoesNotExist:
+            one_entry = None
+        
+        m=Vaccine_detail.objects.all()
+        if request.user.is_authenticated and one_entry:
+            return render(request,'appointment.html',{'u':one_entry,'vacc':m,})
+        elif request.user.is_authenticated:
+            messages.error(request, "Please Register First")
+            return redirect('registration')
+        else:
+            return HttpResponse("Log-In to book appointment")
 
 def About(request):
     return render(request,'about.html',{})
