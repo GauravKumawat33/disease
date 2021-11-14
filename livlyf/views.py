@@ -4,15 +4,30 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 
-from .models import Vaccine_detail, Hospital, Vaccination_Center,Patient,Personal_Detail
+from .models import Center_Vaccine_reln, Vaccine_Consumer, Vaccine_detail, Hospital, Vaccination_Center,Patient,Personal_Detail
+
+from .forms import Registration
 
 from .filter1 import OrderFilter,OrderFilterV,OrderFilterC,OrderFilterP
 # Create your views here.
 
 def Appointment(request):
-    return render(request,'appointment.html',{})
+    try:
+        one_entry = Personal_Detail.objects.get(pk=request.user)
+    except Personal_Detail.DoesNotExist:
+        one_entry = None
     
-
+    m=Vaccine_detail.objects.all()
+    if request.user.is_authenticated and one_entry:
+        return render(request,'appointment.html',{'u':one_entry,'vacc':m,})
+    
+    
+    
+    elif request.user.is_authenticated:
+        messages.error(request, "Please Register First")
+        return redirect('registration')
+    else:
+        return HttpResponse("Log-In to book appointment")
 
 def About(request):
     return render(request,'about.html',{})
@@ -106,7 +121,11 @@ def Patients(request):
         pat=Patient.objects.all()
         myFilter=OrderFilterP(request.GET,queryset=pat)
         pat=myFilter.qs
-        return render(request,'patient.html',{'pat':pat,'myFilter':myFilter})
+
+        Hos=Hospital.objects.all()
+        Per=Personal_Detail.objects.all()
+        # hosp=Hospital.obejects.get(pk=pat.Hospital_ID_id)
+        return render(request,'patient.html',{'pat':pat,'myFilter':myFilter,'Hos':Hos,'Per':Per})
     else:
             return HttpResponse("404- Not found")
 
@@ -119,6 +138,31 @@ def Profile(request):
     if request.user.is_authenticated and one_entry:
         return render(request,'profile.html',{'u':one_entry})
     elif request.user.is_authenticated:
-        return HttpResponse("Contact Admin to register Yourself")
+        messages.error(request, "Please Register First")
+        return redirect('registration')
     else:
-            return HttpResponse("404- Not found")
+        return HttpResponse("404- Not found")
+
+def Registrations(request):
+    if request.method == 'POST': 
+        form = Registration(request.POST)
+        if form.is_valid():
+            post=form.save(commit=False)
+            post.Aadhar_number=request.user
+            post.Email_ID=request.user.email
+            post.save()
+            messages.success(request, "Successfully register")
+        return redirect('home')  
+    else:
+        form = Registration()
+    return render(request,'registration.html',{'form':form})
+
+def CenterInfo(request):
+    Center=Vaccination_Center.objects.all()
+    Reln=Center_Vaccine_reln.objects.all()
+    Vacc=Vaccine_detail.objects.all()
+
+    # myFilter=OrderFilterC(request.GET,queryset=Reln)
+    # Reln=myFilter.qs
+
+    return render(request,'centerinfo.html',{'re':Reln})

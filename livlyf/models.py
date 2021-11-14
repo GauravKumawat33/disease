@@ -42,7 +42,6 @@ class Hospital(models.Model):
     Type=models.CharField(max_length=30,choices=CATEGORY_Type)
     Phone=models.CharField(max_length=10)
 
-
 class Patient(models.Model):
     options=(
         ('Active','Active'),
@@ -62,7 +61,6 @@ class Patient(models.Model):
     Disease_Name=models.CharField(max_length=30,choices=CATEGORY_DISEASE)
     Patient_Condition=models.CharField(max_length=30,choices=options)
     Registration_Date=models.DateField()
-
 
 class Vaccine_detail(models.Model):
     Category_Vaccine=(
@@ -106,14 +104,14 @@ class Center_Vaccine_reln(models.Model):
     Quantity=models.IntegerField()
     Which_Dose=models.IntegerField()
 
-# class Vaccine_Consumer(models.Model):
-#     Constumer_ID=models.IntegerField(primary_key = True)
-#     Aadhar_number=models.ForeignKey(
-#         Personal_Detail, on_delete=models.CASCADE)
-#     Vaccine_chosen=models.ForeignKey(
-#         Vaccine_detail, on_delete=models.CASCADE)
-#     Dose_completed=models.IntegerField()
-#     Last_Dose_taken_date=models.DateField()
+class Vaccine_Consumer(models.Model):
+    Constumer_ID=models.IntegerField(primary_key = True)
+    Aadhar_number=models.ForeignKey(
+        Personal_Detail, on_delete=models.CASCADE)
+    Vaccine_chosen=models.ForeignKey(
+        Vaccine_detail, on_delete=models.CASCADE)
+    Dose_completed=models.IntegerField()
+    Last_Dose_taken_date=models.DateField()
 
 
     

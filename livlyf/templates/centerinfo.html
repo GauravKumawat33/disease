@@ -1,0 +1,67 @@
+{% include 'base.html' %}
+{% include 'nav2.html' %}
+{% load static %}
+{% block content %}
+
+<h1 class="text-center">Center-Vaccine-Details</h1>
+<br>
+<br>
+{% if re %}
+
+<table class="table table-striped table-sortable">
+  <thead>
+    <tr>
+        <th scope="col">Center Name</th>
+        <th scope="col">Location</th>
+        <th scope="col">Vaccine Name</th>
+        <th scope="col">Dose Number</th>
+        <th scope="col">Available Quantity</th>
+        <th scope="col">Phone</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for r in re%}
+  <tr>
+    <th scope="row">{{r.Center_ID.Center_name}}</th>
+    <td>{{r.Center_ID.Locality}}</td>
+    <td>{{r.Vaccine_ID.Vaccine_name}}</td>
+    <td>{{r.Which_Dose}}</td>
+    <td>{{r.Quantity}}</td>
+    <td>{{r.Center_ID.Phone}}</td>
+  </tr>
+  {% endfor %}
+</tbody>
+</table>
+
+{% else %}
+<h1>No Data</h1>
+
+{% endif %}
+<script src="{% static 'tablesort.js'%}"></script>
+
+{% endblock content %}
+<style>
+  .table-sortable th {
+    cursor: pointer;
+  }
+  
+  .table-sortable .th-sort-asc::after {
+    content: "\25b4";
+  }
+  
+  .table-sortable .th-sort-desc::after {
+    content: "\25be";
+  }
+  
+  .table-sortable .th-sort-asc::after,
+  .table-sortable .th-sort-desc::after {
+    margin-left: 5px;
+  }
+  
+  .table-sortable .th-sort-asc,
+  .table-sortable .th-sort-desc {
+    background: rgba(0, 0, 0, 0.1);
+  }
+  
+</style>
+{% include 'footer.html'%}

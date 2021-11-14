@@ -21,23 +21,41 @@
     <thead>
       <tr>
           <th scope="col">Patient ID</th>
+          <th scope="col">Patient Name</th>
+          <th scope="col">Aadhar Number</th>
           <th scope="col">Disease Name</th>
           <th scope="col">Patient Condition</th>
           <th scope="col">Registration Date</th>
-          <th scope="col">Aadhar Card Number</th>
-            <th scope="col">Hospital ID</th>
+          <th scope="col">Hospital Name</th>
 
       </tr>
     </thead>
     <tbody>
         {% for p in pat %}
+        
       <tr>
         <th scope="row">{{p.Patient_ID}}</th>
+        
+        {% for pe in Per %}
+        {% ifequal p.Aadhar_number_id pe.Aadhar_number %}
+        <td>{{pe.First_name}} {{pe.Last_name}}</td>
+        {% endifequal %}
+        {% endfor %}
+        
+        <td>{{p.Aadhar_number_id}}</td>
+        
         <td>{{p.Disease_Name}}</td>
         <td>{{p.Patient_Condition}}</td>
         <td>{{p.Registration_Date}}</td>
-        <td>{{p.Aadhar_number_id}}</td>
-        <td>{{p.Hospital_ID_id}}</td>
+        
+
+        {% for h in Hos %}
+        {% ifequal p.Hospital_ID_id h.Hospital_ID %}
+        <td>{{h.Hospital_name}}</td>
+        {% endifequal %}
+        {% endfor %}
+
+
       </tr>
       {% endfor %}
     </tbody>
