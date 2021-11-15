@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from . models import Personal_Detail,Feedbk
+from . models import Appoin, Personal_Detail,Feedbk
 
 class Registration(forms.ModelForm):
     class Meta:
@@ -25,4 +25,3 @@ class Feedback(forms.ModelForm):
             'Phone':forms.TextInput(attrs={'class':'form-control'}),
             'Feedback':forms.Textarea(attrs={'class':'form-control'}),
         }
-

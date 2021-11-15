@@ -122,11 +122,22 @@
             </div>
               <div style="height: 26px"></div>
             <div class="card shadow-sm">
-              <div class="card-header bg-transparent border-0">
-                <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Other Information</h3>
+               <div class="card-header bg-transparent border-0">
+                <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Vaccination Status</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet egestas augue, ut vehicula purus. Nam a metus lectus. Suspendisse pretium fermentum nunc euismod aliquam. Mauris odio turpis, elementum sit amet fermentum a, placerat at nibh. In hac habitasse platea dictumst. Morbi in sagittis eros. Suspendisse non orci nec elit pharetra ullamcorper. Praesent augue velit, bibendum et turpis id, tempus mattis velit. Nulla pharetra nibh non nibh lobortis vehicula.</p>
               </div>
               <div class="card-body pt-0">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                
+                <!-- {% if consumer %}
+                {% for j in consumer %}
+                {% ifequal u.Aadhar_number j.Aadhar_number_id %}
+                  <p><strong>Vaccine Choosen:</strong> {{j.Vaccine_chosen.Vaccine_name}}</p>
+                  <p><strong>Dose Completed:</strong> {{j.Dose_completed}}</p>                
+                  <p><strong>Last Dose Taken Date:</strong> {{j.Last_Dose_taken_date}}</p>                
+                {% endifequal %}
+                  {% endfor %}
+              {% endif %} -->
+
               </div>
             </div>
           </div>

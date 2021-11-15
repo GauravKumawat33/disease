@@ -19,7 +19,8 @@
                 <div class="well-title">
                     <h2>Book an Appointment</h2>
                 </div>
-                <form action="method=POST" class="post-form">
+                <form method="POST" class="post-form">
+
                     <!-- Form start -->
                     <div class="row">
                         <div class="col-md-6">
@@ -74,11 +75,12 @@
                         <div class="col-md-12">
                             <div class="form-group">
                         <br>
- 
+                                
                                 <button id="singlebutton" name="singlebutton" class="btn btn-primary">Make An Appointment</button>
                             </div>
                         </div>
                     </div>
+          {% csrf_token %} 
                 </form>
                 <!-- form end -->
             </div>

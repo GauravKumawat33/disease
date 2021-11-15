@@ -31,7 +31,9 @@ class Personal_Detail(models.Model):
     Locality=models.CharField(max_length=30)
     Phone=models.CharField(max_length=10)
     Email_ID=models.EmailField(max_length = 254)
-    
+    # Dose_completed=models.IntegerField(default=0)
+    # Last_Dose_taken_date=models.DateField(default=datetime.now, blank=True)
+
     
 
 class Hospital(models.Model):
@@ -111,17 +113,24 @@ class Center_Vaccine_reln(models.Model):
     Quantity=models.IntegerField()
     Which_Dose=models.IntegerField()
 
-class Vaccine_Consumer(models.Model):
-    Constumer_ID=models.IntegerField(primary_key = True)
-    Aadhar_number=models.ForeignKey(
-        Personal_Detail, on_delete=models.CASCADE,default='0000000')
-    Vaccine_chosen=models.ForeignKey(Vaccine_detail, on_delete=models.CASCADE,default=None)
-    Dose_completed=models.IntegerField(default=0)
-    Last_Dose_taken_date=models.DateField(default=datetime.now, blank=True)
+# class Vaccine_Consumer(models.Model):
+#     Constumer_ID=models.IntegerField(primary_key = True)
+#     Aadhar_number=models.ForeignKey(
+#         Personal_Detail, on_delete=models.CASCADE,default='0000000')
+#     Vaccine_chosen=models.ForeignKey(Vaccine_detail, on_delete=models.CASCADE)
+#     Dose_completed=models.IntegerField(default=0)
+#     Last_Dose_taken_date=models.DateField(default=datetime.now, blank=True)
 
 class Feedbk(models.Model):
     Name=models.CharField(max_length=200)
     Email=models.CharField(max_length=200)
     Phone=models.CharField(max_length=10)
     Feedback=models.CharField(max_length=1000)
-    
+
+
+class Appoin(models.Model):
+    Name=models.CharField(max_length=200)
+    # Phone=models.CharField(max_length=10)
+    Date=models.DateField(max_length=200)
+    Vaccine=models.CharField(max_length=200)
+    Number=models.IntegerField()

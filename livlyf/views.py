@@ -5,40 +5,39 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 
-from .models import Center_Vaccine_reln, Vaccine_Consumer, Vaccine_detail, Hospital, Vaccination_Center,Patient,Personal_Detail
+from .models import Appoin, Center_Vaccine_reln, Vaccine_detail, Hospital, Vaccination_Center,Patient,Personal_Detail
 
-from .forms import Registration
+from .forms import Registration, Feedback
 
 from .filter1 import OrderFilter,OrderFilterV,OrderFilterC,OrderFilterP
 # Create your views here.
+def CenterInfo(request):
+    Reln=Center_Vaccine_reln.objects.all()
+    return render(request,'centerinfo.html',{'re':Reln})
 
 def Appointment(request):
     if request.method == 'POST':
-        adhar=request.user
+        adhar=request.user.username
         v_chos=request.POST['vaccines']
         num=request.POST['num']
         date=request.POST['date']
-        pre_date=None
-        if num==1:
-            pre_date = None 
-        else:
-            pre_date = Vaccine_Consumer.objects.get(Aadhar_number=request.user).order_by("-Last_Dose_taken_date")
-            print(pre_date.type())
-
+        time=request.POST['time']
+        Appoin.objects.create(Name=adhar,Date=date,Vaccine=v_chos,Number=num)
+        messages.success(request,"Form Created Successfully") 
+        redirect('home')  
+    
+    try:
+        one_entry = Personal_Detail.objects.get(pk=request.user)
+    except Personal_Detail.DoesNotExist:
+        one_entry = None
+    m=Vaccine_detail.objects.all()
+    if request.user.is_authenticated and one_entry:
+        return render(request,'appointment.html',{'u':one_entry,'vacc':m,})
+    elif request.user.is_authenticated:
+        messages.error(request, "Please Register First")
+        return redirect('registration')
     else:
-        try:
-            one_entry = Personal_Detail.objects.get(pk=request.user)
-        except Personal_Detail.DoesNotExist:
-            one_entry = None
-        
-        m=Vaccine_detail.objects.all()
-        if request.user.is_authenticated and one_entry:
-            return render(request,'appointment.html',{'u':one_entry,'vacc':m,})
-        elif request.user.is_authenticated:
-            messages.error(request, "Please Register First")
-            return redirect('registration')
-        else:
-            return HttpResponse("Log-In to book appointment")
+        return HttpResponse("Log-In to book appointment")
 
 def About(request):
     return render(request,'about.html',{})
@@ -91,6 +90,7 @@ def handleLogin(request):
         loginusername=request.POST['username']
         loginpass=request.POST['pass']
         user=authenticate(username= loginusername, password= loginpass)
+        
         if user is not None:
             login(request, user)
             messages.success(request, "Successfully Logged In")
@@ -163,17 +163,26 @@ def Registrations(request):
             post.Email_ID=request.user.email
             post.save()
             messages.success(request, "Successfully register")
+        else:
+            messages.error(request,"Invalid Form")
         return redirect('home')  
     else:
         form = Registration()
     return render(request,'registration.html',{'form':form})
 
-def CenterInfo(request):
-    Center=Vaccination_Center.objects.all()
-    Reln=Center_Vaccine_reln.objects.all()
-    Vacc=Vaccine_detail.objects.all()
+def Home(request):
+        count=0
+        form = Feedback()
+        if request.method == 'POST': 
+            if 'button1' in request.POST:
+                form = Feedback(request.POST)
+                if form.is_valid():
+                    form.save()
+                    messages.success(request,"Feedack submitted Sucessfuly")
+                return redirect('home')            
+        else:
+            form=Feedback()
+            nos= 'No data available'
+            
 
-    # myFilter=OrderFilterC(request.GET,queryset=Reln)
-    # Reln=myFilter.qs
-
-    return render(request,'centerinfo.html',{'re':Reln})
+        return render(request, 'home.html', {'form': form,'nos':count})
